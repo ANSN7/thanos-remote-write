@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: thanos-stateless-ruler-config
+  namespace: monitoring
+data:
+  rw-config.yaml: |
+    remote_write:
+      - url: "http://receiver-write.example.com:30657/api/v1/receive"
+        queue_config:
+          max_samples_per_send: 40000
+          max_shards: 50
+          capacity: 12000
+
+
+  # remote_write:
+  #   - url: http://e2e_test_rule_remote_write-receive-1:8081/api/v1/receive
+  #     name: thanos-receiver
+  #     follow_redirects: false
+  #     queue_config:
+  #       capacity: 120000
+  #       max_shards: 50
+  #       min_shards: 1
+  #       max_samples_per_send: 40000
+  #       batch_send_deadline: 5s
+  #       min_backoff: 5s
+  #       max_backoff: 5m

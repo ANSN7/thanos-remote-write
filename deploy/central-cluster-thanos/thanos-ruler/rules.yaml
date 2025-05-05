@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: thanos-ruler-rules
+  namespace: monitoring
+data:
+  alert_down_services.rules.yaml: |
+    groups:
+    - name: example-recording-rules
+      interval: 30s
+      rules:
+      - record: instance:cpu_usage:avg
+        expr: avg(rate(node_cpu_seconds_total[5m])) by (instance)
+      - record: cluster_cpu_average
+        expr: avg(container_cpu_usage_seconds_total) by (cluster)
+      - record: cluster_memory
+        expr: avg(rate(node_memory_Active_bytes[5m])) by (instance)
